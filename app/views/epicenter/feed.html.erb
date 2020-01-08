@@ -1,0 +1,17 @@
+<h1>@<%= current_user.username %>'s Twitter Feed</h1>
+<p>Here is what your "friends" are saying:</p>
+
+
+<div class="card bg-dark text-white col-sm-5 col-sm-offset-2" style="background-color: #1c1c1c ; color: #ffffff">
+    <% @following_tweets.each do |tweet| %>
+        <div>
+        <div class="card-header">
+        <%= image_tag current_user.avatar.url, size:50, :class => "pull-left" %>
+	    <p class="card-title">@<%= link_to tweet.user.username, show_user_path(id: tweet.user.id) %></p>
+        </div>
+        <div class="card-body">
+	    <p class="card-text"><%= tweet.message.html_safe %></p>
+        </div>
+	</div>
+    <% end %>
+</div>
