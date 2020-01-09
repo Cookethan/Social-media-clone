@@ -2,7 +2,15 @@
 <p>Here is what your "friends" are saying:</p>
 
 
-<div class="card bg-dark text-white col-sm-5 col-sm-offset-2" style="background-color: #1c1c1c ; color: #ffffff">
+<div>
+    <%= form_for @tweet do |f| %>
+    <%= f.text_field :message, placeholder: 'new tweet' %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.submit %>
+    <% end %>
+</div>
+
+<div class="card bg-dark text-white col-sm-6 col-sm-offset-3" style="background-color: #1c1c1c ; color: #ffffff">
     <% @following_tweets.each do |tweet| %>
         <div>
         <div class="card-header">
@@ -11,6 +19,7 @@
         </div>
         <div class="card-body">
 	    <p class="card-text"><%= tweet.message.html_safe %></p>
+        <p><%= time_ago_in_words(tweet.created_at) unless tweet.created_at.blank? %> ago</p>
         </div>
 	</div>
     <% end %>

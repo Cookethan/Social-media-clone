@@ -1,5 +1,6 @@
 class EpicenterController < ApplicationController
   def feed
+    @tweet = Tweet.new
     @following_tweets = []
 
     Tweet.all.each do |tweet|
@@ -25,5 +26,24 @@ class EpicenterController < ApplicationController
     current_user.save
   
     redirect_to show_user_path(id: params[:id])  	
+  end
+
+  def create_tweet
+    tweet = Tweet.create(tweet_params)
+    redirect_to root_path
+  end
+
+  def tweets
+    @tweet = Tweet.all
+  end
+
+  def tag_tweets
+    @tag = Tag.find(params[:id])
+  end
+
+  private 
+
+  def tweet_params
+    params.require(:tweet).permit(:message, :user_id)
   end
 end

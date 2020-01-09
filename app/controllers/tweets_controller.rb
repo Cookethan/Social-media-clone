@@ -1,6 +1,8 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
 
+  include TweetsHelper
+
   # GET /tweets
   # GET /tweets.json
   def index
@@ -24,7 +26,9 @@ class TweetsController < ApplicationController
   # POST /tweets
   # POST /tweets.json
   def create
-    @tweet = Tweet.new(tweet_params)
+    @tweet = Tweet.create(tweet_params)
+
+    @tweet = get_tagged(@tweet)
 
     respond_to do |format|
       if @tweet.save
@@ -59,6 +63,10 @@ class TweetsController < ApplicationController
       format.html { redirect_to tweets_url, notice: 'Tweet was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def tag_tweets
+    @tag = Tag.find(params[:id])
   end
 
   private
