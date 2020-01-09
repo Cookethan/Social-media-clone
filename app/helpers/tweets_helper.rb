@@ -1,6 +1,6 @@
 module TweetsHelper
-
-    def get_tagged(tweet)
+    
+         def get_tagged(tweet)
         message_arr = Array.new
         message_arr = tweet.message.split
         message_arr.each_with_index do |word, index|
@@ -11,9 +11,7 @@ module TweetsHelper
                     tag = Tag.create(phrase: word.downcase)
                 end
                 tweet_tag = TweetTag.create(tweet_id: tweet.id, tag_id: tag.id)
-                message_arr[index] = "<a href='/tag_tweets?id=#{tag.id}'>#{word}</a>"
-            else
-                word.capitalize    
+                message_arr[index] = "<a href='/tag_tweets?id=#{tag.id}'>#{word}</a>"   
             end
         end
 
