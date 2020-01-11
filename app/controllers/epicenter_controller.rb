@@ -7,8 +7,10 @@ class EpicenterController < ApplicationController
         if current_user.following.include?(tweet.user_id) || current_user.id == tweet.user_id
           @following_tweets.push(tweet)
         end
-      end
     end
+    @following_tweets = @following_tweets.sort_by(&:created_at)
+    @following_tweets.reverse!
+  end
 
   def show_user
     @user = User.find(params[:id])
